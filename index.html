@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Search</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <label for="video-search">Search for a video:</label>
+        <input type="text" id="video-search" oninput="handleInput()" placeholder="Type a video name...">
+        <div id="suggestions"></div>
+        <button onclick="autoFill()">Auto Fill</button>
+        <div id="video-result"></div>
+    </div>
+    
+    <button onclick="translateSelectedVideos()">Translate</button>
+
+    
+    
+
+    <script src="index.js"></script>
+</body>
+</html>
+
