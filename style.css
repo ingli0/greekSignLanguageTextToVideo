@@ -50,11 +50,29 @@ button:hover {
     background-color: #218838;
 }
 
-#autoFillContainer {
-    margin-top: 10px;
-}
-
+ 
 video {
     width: 100%;
     max-width: 600px;
+}
+
+#autoFillContainer {
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+#searchBox {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

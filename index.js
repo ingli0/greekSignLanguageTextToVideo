@@ -1,14 +1,12 @@
 console.log("Script loaded");
 
-let jsonData;  // Declare jsonData variable outside the DOMContentLoaded callback
-
-function testFunction() {
-    console.log("Test function called");
-}
+let jsonData;
+let selectedWords = [];
 
 function autoFill() {
     const searchBox = document.getElementById('searchBox');
     const autoFillContainer = document.getElementById('autoFillContainer');
+    const translateButton = document.getElementById('translateButton');
 
     autoFillContainer.innerHTML = '';
 
@@ -19,37 +17,55 @@ function autoFill() {
         suggestions.forEach(entry => {
             const suggestionItem = document.createElement('div');
             suggestionItem.textContent = entry.name;
-            suggestionItem.addEventListener('click', () => fillSearchBox(entry.name));
+            suggestionItem.addEventListener('click', () => toggleSelect(entry.name));
             autoFillContainer.appendChild(suggestionItem);
         });
+
+        // Show the translate button when there are search results
+        translateButton.style.display = 'inline-block';
+    } else {
+        // Hide the translate button when the search box is empty
+        translateButton.style.display = 'none';
     }
 }
 
-function fillSearchBox(value) {
-    document.getElementById('searchBox').value = value;
-    document.getElementById('autoFillContainer').innerHTML = '';
-    document.getElementById('videoName').textContent = value;
-    translateVideo();
+
+function toggleSelect(word) {
+    if (selectedWords.includes(word)) {
+        selectedWords = selectedWords.filter(selectedWord => selectedWord !== word);
+    } else {
+        selectedWords.push(word);
+    }
+
+    autoFill();
+
+    console.log('Selected words:', selectedWords);
 }
 
 function translateVideo() {
-    const searchBox = document.getElementById('searchBox');
     const videoLinkContainer = document.getElementById('videoLinkContainer');
 
-    const searchValue = searchBox.value.toLowerCase();
-    const selectedEntry = jsonData.find(entry => entry.name.toLowerCase() === searchValue);
+    // Add some space at the top of videoLinkContainer
+    videoLinkContainer.style.marginTop = '40px';
 
-    videoLinkContainer.innerHTML = '';
+    selectedWords.forEach(word => {
+        const selectedEntry = jsonData.find(entry => entry.name.toLowerCase() === word.toLowerCase());
 
-    if (selectedEntry) {
-        const videoElement = document.createElement('video');
-        videoElement.src = selectedEntry.videolink;
-        videoElement.controls = true;
-        videoLinkContainer.appendChild(videoElement);
-    } else {
-        videoLinkContainer.innerHTML = '<p>Video not found for the entered name.</p>';
+        if (selectedEntry) {
+            const videoElement = document.createElement('div');
+            videoElement.innerHTML = `<h3>${word}</h3><video src="${selectedEntry.videolink}" controls></video>`;
+            videoLinkContainer.appendChild(videoElement);
+        }
+    });
+
+    if (selectedWords.length === 0) {
+        videoLinkContainer.innerHTML = '<p>No words selected.</p>';
     }
+
+    // Scroll to the top of videoLinkContainer
+    videoLinkContainer.scrollIntoView({ behavior: 'smooth' });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('/extracted_data.json')
@@ -59,6 +75,27 @@ document.addEventListener('DOMContentLoaded', () => {
             autoFill();
         })
         .catch(error => console.error('Error fetching JSON:', error));
+
+    // Move the translateVideo function inside the DOMContentLoaded event listener
+    function translateVideo() {
+        const videoLinkContainer = document.getElementById('videoLinkContainer');
+
+        videoLinkContainer.innerHTML = '';
+
+        selectedWords.forEach(word => {
+            const selectedEntry = jsonData.find(entry => entry.name.toLowerCase() === word.toLowerCase());
+
+            if (selectedEntry) {
+                const videoElement = document.createElement('div');
+                videoElement.innerHTML = `<h3>${word}</h3><video src="${selectedEntry.videolink}" controls></video>`;
+                videoLinkContainer.appendChild(videoElement);
+            }
+        });
+
+        if (selectedWords.length === 0) {
+            videoLinkContainer.innerHTML = '<p>No words selected.</p>';
+        }
+    }
 
     document.getElementById('searchBox').addEventListener('input', autoFill);
     document.getElementById('translateButton').addEventListener('click', translateVideo);
