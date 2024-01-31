@@ -29,7 +29,6 @@ function autoFill() {
     }
 }
 
-
 function toggleSelect(word) {
     if (selectedWords.includes(word)) {
         selectedWords = selectedWords.filter(selectedWord => selectedWord !== word);
@@ -37,13 +36,19 @@ function toggleSelect(word) {
         selectedWords.push(word);
     }
 
-    autoFill();
+    // Display selected words in the 'selectedWords' div
+    const selectedWordsDiv = document.getElementById('selectedWords');
+    selectedWordsDiv.innerHTML = selectedWords.map(word => `<span>${word}</span>`).join(', ');
 
     console.log('Selected words:', selectedWords);
 }
 
+
 function translateVideo() {
-    const videoLinkContainer = document.getElementById('videoLinkContainer');
+    const videoLinkContainer = document.getElementById('videoLink');
+
+    // Clear existing content
+    videoLinkContainer.innerHTML = '';
 
     // Add some space at the top of videoLinkContainer
     videoLinkContainer.style.marginTop = '40px';
@@ -75,27 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             autoFill();
         })
         .catch(error => console.error('Error fetching JSON:', error));
-
-    // Move the translateVideo function inside the DOMContentLoaded event listener
-    function translateVideo() {
-        const videoLinkContainer = document.getElementById('videoLinkContainer');
-
-        videoLinkContainer.innerHTML = '';
-
-        selectedWords.forEach(word => {
-            const selectedEntry = jsonData.find(entry => entry.name.toLowerCase() === word.toLowerCase());
-
-            if (selectedEntry) {
-                const videoElement = document.createElement('div');
-                videoElement.innerHTML = `<h3>${word}</h3><video src="${selectedEntry.videolink}" controls></video>`;
-                videoLinkContainer.appendChild(videoElement);
-            }
-        });
-
-        if (selectedWords.length === 0) {
-            videoLinkContainer.innerHTML = '<p>No words selected.</p>';
-        }
-    }
 
     document.getElementById('searchBox').addEventListener('input', autoFill);
     document.getElementById('translateButton').addEventListener('click', translateVideo);

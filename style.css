@@ -51,10 +51,32 @@ button:hover {
 }
 
  
+#videoLink {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+video {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin: 10px; /* Add some margin for spacing */
+}
+
+
 video {
     width: 100%;
-    max-width: 600px;
+    max-width: 400px; /* Adjust the maximum width as needed */
+    height: auto;
+    margin: 10px; /* Add some margin for spacing */
 }
+
+
+#videoLinkContainer {
+    padding-top: 20px; /* Adjust the value as needed */
+}
+
 
 #autoFillContainer {
     margin-top: 10px;
@@ -68,11 +90,7 @@ video {
 }
 
 .search-container {
-    margin-bottom: 20px;
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: #fff;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
