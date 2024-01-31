@@ -21,11 +21,9 @@ function autoFill() {
             autoFillContainer.appendChild(suggestionItem);
         });
 
-        // Show the translate button when there are search results
-        translateButton.style.display = 'inline-block';
+         translateButton.style.display = 'inline-block';
     } else {
-        // Hide the translate button when the search box is empty
-        translateButton.style.display = 'none';
+         translateButton.style.display = 'none';
     }
 }
 
@@ -36,8 +34,7 @@ function toggleSelect(word) {
         selectedWords.push(word);
     }
 
-    // Display selected words in the 'selectedWords' div
-    const selectedWordsDiv = document.getElementById('selectedWords');
+     const selectedWordsDiv = document.getElementById('selectedWords');
     selectedWordsDiv.innerHTML = selectedWords.map(word => `<span>${word}</span>`).join(', ');
 
     console.log('Selected words:', selectedWords);
@@ -47,11 +44,9 @@ function toggleSelect(word) {
 function translateVideo() {
     const videoLinkContainer = document.getElementById('videoLink');
 
-    // Clear existing content
-    videoLinkContainer.innerHTML = '';
+     videoLinkContainer.innerHTML = '';
 
-    // Add some space at the top of videoLinkContainer
-    videoLinkContainer.style.marginTop = '40px';
+     videoLinkContainer.style.marginTop = '40px';
 
     selectedWords.forEach(word => {
         const selectedEntry = jsonData.find(entry => entry.name.toLowerCase() === word.toLowerCase());
@@ -67,8 +62,7 @@ function translateVideo() {
         videoLinkContainer.innerHTML = '<p>No words selected.</p>';
     }
 
-    // Scroll to the top of videoLinkContainer
-    videoLinkContainer.scrollIntoView({ behavior: 'smooth' });
+     videoLinkContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
 

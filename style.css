@@ -61,20 +61,19 @@ video {
     width: auto;
     max-width: 100%;
     height: auto;
-    margin: 10px; /* Add some margin for spacing */
+    margin: 10px; 
 }
 
 
 video {
     width: 100%;
-    max-width: 400px; /* Adjust the maximum width as needed */
+    max-width: 400px;  
     height: auto;
-    margin: 10px; /* Add some margin for spacing */
+    margin: 10px;  
 }
 
-
 #videoLinkContainer {
-    padding-top: 20px; /* Adjust the value as needed */
+    padding-top: 20px;  
 }
 
 
